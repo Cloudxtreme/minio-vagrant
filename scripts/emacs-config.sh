@@ -27,7 +27,7 @@ cat <<EOF > /root/pkg-install.el
 EOF
 
 # Install emacs packages
-for pkg in $("go-autocomplete go-mode go-eldoc git-gutter go-mode-autoloads auto-complete auto-complete-config"); do
+for pkg in $(echo "go-autocomplete go-mode go-eldoc git-gutter go-mode-autoloads auto-complete auto-complete-config"); do
     emacs --batch --eval "(defconst pkg '$pkg)" -l /root/pkg-install.el
 done
 
