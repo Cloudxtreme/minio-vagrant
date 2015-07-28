@@ -5,37 +5,53 @@ cat <<EOF > /root/pkg-install.el
 ;;
 ;; Install package from command line. Example:
 ;;
-;;   $ emacs --batch --expr "(defconst pkg 'go-autocomplete)" -l pkg-install.el
+;;   $ emacs --batch --eval="(defconst pkg 'go-autocomplete)" -l pkg-install.el
 ;;
 
 (require 'package)
-
 (package-initialize)
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
-
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
 ;; Fix HTTP1/1.1 problems
 (setq url-http-attempt-keepalives nil)
-
 (package-refresh-contents)
-
 (package-install pkg)
+
 EOF
 
 # Install emacs packages
-for pkg in $(echo "go-autocomplete go-mode go-eldoc git-gutter go-mode-autoloads auto-complete auto-complete-config"); do
-    emacs --batch --eval "(defconst pkg '$pkg)" -l /root/pkg-install.el
+for pkg in $(echo "go-autocomplete go-mode go-eldoc git-gutter go-mode-autoloads auto-complete saveplace"); do
+    emacs --batch --eval="(defconst pkg '$pkg)" -l /root/pkg-install.el
 done
 
 # Initialize emacs
 mkdir -p /home/vagrant/.emacs.d
-chown -R vagrant /home/vagrant/.emacs.d
 
 cat <<EOF > /home/vagrant/.emacs.d/init.el
+(require 'package)
+(package-initialize)
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file "~/.emacs.d/saved-places")
+
 ;; Go mode
 (require 'git-gutter)
 ;; If you enable global minor mode
@@ -71,3 +87,5 @@ cat <<EOF > /home/vagrant/.emacs.d/init.el
 (setq compilation-scroll-output 'first-error)
 
 EOF
+
+chown -R vagrant /home/vagrant/.emacs.d
