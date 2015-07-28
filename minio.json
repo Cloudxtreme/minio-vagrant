@@ -15,6 +15,7 @@
                 "scripts/virtualbox.sh",
                 "scripts/vagrant.sh",
                 "scripts/dep.sh",
+                "scripts/emacs-config.sh",
                 "scripts/cleanup.sh",
                 "scripts/zerodisk.sh"
             ],
@@ -39,7 +40,8 @@
             ],
             "vboxmanage": [
               ["modifyvm", "{{.Name}}", "--memory", "1024"],
-              ["modifyvm", "{{.Name}}", "--cpus", "2"]
+              ["modifyvm", "{{.Name}}", "--cpus", "2"],
+              ["modifyvm", "{{.Name}}", "--natdnshostresolver1", "on"]
             ],
             "headless": true,
             "boot_wait": "10s",
