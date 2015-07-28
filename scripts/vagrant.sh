@@ -11,9 +11,10 @@ chown -R vagrant /home/vagrant/.ssh
 
 mkdir -p /home/vagrant/go
 chown -R vagrant /home/vagrant/go
+
 echo "export GOROOT=/usr/local/go" >> /home/vagrant/.bashrc
 echo "export GOPATH=${HOME}/go" >> /home/vagrant/.bashrc
-echo "export PATH=$PATH:/usr/local/go/bin:${GOPATH}/go/bin"
+echo "export PATH=$PATH:/usr/local/go/bin:${GOPATH}/go/bin" >> /home/vagrant/.bashrc
 
 # Customize the message of the day
 echo 'Welcome! to Minio development Environment' > /etc/motd

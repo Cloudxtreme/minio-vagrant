@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Removing leftover packages
 apt-get clean
 
 # Removing leftover leases and persistent rules
