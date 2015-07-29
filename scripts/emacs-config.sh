@@ -78,7 +78,6 @@ cat <<EOF > /home/vagrant/.emacs.d/init.el
 ;; Compile key binding
 (defun go-mode-setup ()
  (global-auto-complete-mode t)
- (projectile-global-mode)
  (go-eldoc-setup)
  (setq gofmt-command "goimports")
  (add-hook 'before-save-hook 'gofmt-before-save))
